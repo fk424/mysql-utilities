@@ -1015,20 +1015,23 @@ class Database(object):
             else:
                 create_statement = row[0][2]
 
+        # First, get partition options.
+        create_tbl, sep, part_opts = create_statement.rpartition('\n/*')
+        # Handle situation where no partition options are found.
+        if not create_tbl:
+            create_tbl = part_opts
+            part_opts = ''
+        else:
+            part_opts = "{0}{1}".format(sep, part_opts)
+        # Then, separate table definitions from table options.
+        create_tbl, sep, _ = create_tbl.rpartition(') ')
+        # Reconstruct CREATE statement without table options.
         # Remove all table options from the CREATE statement (if requested).
         if self.skip_table_opts and obj_type == _TABLE:
-            # First, get partition options.
-            create_tbl, sep, part_opts = create_statement.rpartition('\n/*')
-            # Handle situation where no partition options are found.
-            if not create_tbl:
-                create_tbl = part_opts
-                part_opts = ''
-            else:
-                part_opts = "{0}{1}".format(sep, part_opts)
-            # Then, separate table definitions from table options.
-            create_tbl, sep, _ = create_tbl.rpartition(') ')
-            # Reconstruct CREATE statement without table options.
             create_statement = "{0}{1}{2}".format(create_tbl, sep, part_opts)
+        else:
+            _ = re.sub(r" AUTO_INCREMENT=\d*", "", _)
+            create_statement = "{0}{1}{2}{3}".format(create_tbl, sep, _, part_opts)
 
         return create_statement
 

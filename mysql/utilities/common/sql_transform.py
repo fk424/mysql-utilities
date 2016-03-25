@@ -541,12 +541,12 @@ class SQLTransformer(object):
             # engine
             {'fmt': "ENGINE=%s", 'col': _TABLE_ENGINE, 'val': ""},
             # auto increment
-            {'fmt': "AUTO_INCREMENT=%s", 'col': _TABLE_AUTO_INCREMENT,
+            {'fmt': "AUTO_INCREMENT=%s", 'col': _IGNORE_COLUMN,
              'val': ""},
             # collation
             {'fmt': "COLLATE=%s", 'col': _TABLE_COLLATION, 'val': ""},
             # comment - always include to ensure comments can be removed
-            {'fmt': "COMMENT='%s'", 'col': _IGNORE_COLUMN,
+            {'fmt': "COMMENT='%s'", 'col': _TABLE_COMMENT,
              'val': source[_TABLE_COMMENT]},
             # create options - will be completed later
             {'fmt': "%s", 'col': _IGNORE_COLUMN, 'val': ""},
