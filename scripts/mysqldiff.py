@@ -21,6 +21,10 @@ This file contains the object diff utility which allows users to compare the
 definitions of two objects and return the difference (like diff).
 """
 
+import sys
+path = sys.path[0]
+sys.path.insert(0, path + '/..')
+
 from mysql.utilities.common.tools import check_python_version
 
 # Check Python version compatibility
@@ -28,7 +32,6 @@ check_python_version()
 
 import os
 import re
-import sys
 
 from mysql.utilities.exception import FormatError, UtilError
 from mysql.utilities.command.diff import object_diff, database_diff
