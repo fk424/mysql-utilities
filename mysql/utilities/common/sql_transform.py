@@ -997,9 +997,9 @@ class SQLTransformer(object):
 
         # Get the list of indexes
         # Do not compare with the name of the tables
-        dest_idx = [('',) + tuple(idx[1:])
+        dest_idx = [('',) + tuple(idx[1:6]) + ('',) + tuple(idx[7:])
                     for idx in self.dest_tbl.get_tbl_indexes()]
-        src_idx = [('',) + tuple(idx[1:])
+        src_idx = [('',) + tuple(idx[1:6]) + ('',) + tuple(idx[7:])
                    for idx in self.src_tbl.get_tbl_indexes()]
 
         # Now we determine the indexes we need to add and those to drop
